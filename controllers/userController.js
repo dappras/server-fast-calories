@@ -2,6 +2,8 @@ const express = require("express");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const fs = require("fs-extra");
+const path = require("path");
 require("dotenv").config();
 
 module.exports = {
@@ -87,6 +89,7 @@ module.exports = {
   editUser: async (req, res) => {
     try {
       const { email, name, password } = req.body;
+      const token = req.token;
       const user = await User.findOne({ token: req.token });
 
       if (req.fileName === undefined) {
