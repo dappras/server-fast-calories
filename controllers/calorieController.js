@@ -89,7 +89,7 @@ module.exports = {
         const hasilItem = {
           _id: item._id,
           foodName: item.foodName,
-          image: `http://10.0.2.2:3000/${item.imageUrl}`,
+          image: `https://server-fast-calories-dappras.koyeb.app/${item.imageUrl}`,
           calorie: item.calorie,
           createdAt: item.createdAt,
         };
@@ -103,7 +103,7 @@ module.exports = {
         const hasilItem = {
           _id: item._id,
           foodName: item.foodName,
-          image: `http://10.0.2.2:3000/${item.imageUrl}`,
+          image: `https://server-fast-calories-dappras.koyeb.app/${item.imageUrl}`,
           calorie: item.calorie,
           createdAt: item.createdAt,
         };
@@ -117,7 +117,7 @@ module.exports = {
         const hasilItem = {
           _id: item._id,
           foodName: item.foodName,
-          image: `http://10.0.2.2:3000/${item.imageUrl}`,
+          image: `https://server-fast-calories-dappras.koyeb.app/${item.imageUrl}`,
           // image: `http://localhost:3000/${item.imageUrl}`,
           calorie: item.calorie,
           createdAt: item.createdAt,
