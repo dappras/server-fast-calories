@@ -104,12 +104,12 @@ module.exports = {
           user.token = token;
         }
 
-        await profile.save();
+        await user.save();
 
         return res.json({
           success: true,
           msg: "success update data",
-          data: profile,
+          data: user,
         });
       } else {
         if (
@@ -119,7 +119,7 @@ module.exports = {
         ) {
           user.imageUrl = `images/${req.fileName}`;
         } else {
-          await fs.unlink(path.join(`public/${profile.imageUrl}`));
+          await fs.unlink(path.join(`public/${user.imageUrl}`));
           user.imageUrl = `images/${req.fileName}`;
         }
         if (password === undefined) {
@@ -136,12 +136,12 @@ module.exports = {
           user.token = token;
         }
 
-        await profile.save();
+        await user.save();
 
         return res.json({
           success: true,
           msg: "success update data",
-          data: profile,
+          data: user,
         });
       }
     } catch (e) {
