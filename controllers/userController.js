@@ -68,6 +68,7 @@ module.exports = {
       hasil = {
         name: user.name,
         email: user.email,
+        imageProfile: `images/${user.imageUrl}`,
       };
 
       return res.json({
@@ -75,6 +76,74 @@ module.exports = {
         msg: "success getting data!!",
         data: hasil,
       });
+    } catch (e) {
+      return res.json({
+        success: false,
+        msg: e.message,
+      });
+    }
+  },
+
+  editUser: async (req, res) => {
+    try {
+      const { email, name, password } = req.body;
+      const user = await User.findOne({ token: req.token });
+
+      if (req.fileName === undefined) {
+        if (password === undefined) {
+          user.name = name;
+          user.email = email;
+          user.token = token;
+        } else {
+          const salt = await bcrypt.genSalt(10);
+          const hashPassword = await bcrypt.hash(password, salt);
+
+          user.name = name;
+          user.password = hashPassword;
+          user.email = email;
+          user.token = token;
+        }
+
+        await profile.save();
+
+        return res.json({
+          success: true,
+          msg: "success update data",
+          data: profile,
+        });
+      } else {
+        if (
+          user.imageUrl == undefined ||
+          user.imageUrl == null ||
+          user.imageUrl == ""
+        ) {
+          user.imageUrl = `images/${req.fileName}`;
+        } else {
+          await fs.unlink(path.join(`public/${profile.imageUrl}`));
+          user.imageUrl = `images/${req.fileName}`;
+        }
+        if (password === undefined) {
+          user.name = name;
+          user.email = email;
+          user.token = token;
+        } else {
+          const salt = await bcrypt.genSalt(10);
+          const hashPassword = await bcrypt.hash(password, salt);
+
+          user.name = name;
+          user.password = hashPassword;
+          user.email = email;
+          user.token = token;
+        }
+
+        await profile.save();
+
+        return res.json({
+          success: true,
+          msg: "success update data",
+          data: profile,
+        });
+      }
     } catch (e) {
       return res.json({
         success: false,
