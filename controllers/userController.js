@@ -70,7 +70,10 @@ module.exports = {
       hasil = {
         name: user.name,
         email: user.email,
-        imageProfile: `images/${user.imageUrl}`,
+        imageProfile:
+          user.imageUrl != undefined
+            ? `https://server-fast-calories-dappras.koyeb.app/${user.imageUrl}`
+            : null,
       };
 
       return res.json({
