@@ -129,16 +129,16 @@ module.exports = {
 
       if (calorie.length > 0) {
         calorie.forEach(async (item) => {
-          if (item.imageUrl != null) {
+          if (item.imageUrl != null && item.imageUrl != "") {
             await fs.unlink(path.join(`public/${item.imageUrl}`));
           }
 
-          const dataCalorie = await Calorie.findOneAndDelete({ _id: item._id });
+          await Calorie.findOneAndDelete({ _id: item._id });
         });
       }
 
       if (user != null) {
-        if (user.imageUrl != null) {
+        if (user.imageUrl != null && user.imageUrl != "") {
           await fs.unlink(path.join(`public/${user.imageUrl}`));
         }
 
