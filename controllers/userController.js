@@ -96,16 +96,18 @@ module.exports = {
       const hasil = [];
 
       user.forEach((item) => {
-        hasil.push({
-          id: item._id,
-          name: item.name,
-          email: item.email,
-          roles: item.roles,
-          imageProfile:
-            item.imageUrl != undefined
-              ? `https://server-fast-calories-dappras.koyeb.app/${item.imageUrl}`
-              : null,
-        });
+        if (item.roles != 1) {
+          hasil.push({
+            id: item._id,
+            name: item.name,
+            email: item.email,
+            roles: item.roles,
+            imageProfile:
+              item.imageUrl != undefined
+                ? `https://server-fast-calories-dappras.koyeb.app/${item.imageUrl}`
+                : null,
+          });
+        }
       });
 
       return res.json({
