@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const fs = require("fs-extra");
 const path = require("path");
+const Calorie = require("../models/calorie");
 require("dotenv").config();
 
 module.exports = {
@@ -80,6 +81,73 @@ module.exports = {
         success: true,
         msg: "success getting data!!",
         data: hasil,
+      });
+    } catch (e) {
+      return res.json({
+        success: false,
+        msg: e.message,
+      });
+    }
+  },
+
+  getAllUser: async (req, res) => {
+    try {
+      const user = await User.find();
+      const hasil = [];
+
+      user.forEach((item) => {
+        hasil.push({
+          id: item._id,
+          name: item.name,
+          email: item.email,
+          roles: item.roles,
+          imageProfile:
+            item.imageUrl != undefined
+              ? `https://server-fast-calories-dappras.koyeb.app/${item.imageUrl}`
+              : null,
+        });
+      });
+
+      return res.json({
+        success: true,
+        msg: "success getting all user!!",
+        data: hasil,
+      });
+    } catch (e) {
+      return res.json({
+        success: false,
+        msg: e.message,
+      });
+    }
+  },
+
+  deleteUser: async (req, res) => {
+    try {
+      const { id } = req.body;
+      const user = await User.findOne({ _id: id });
+      const calorie = await Calorie.find({ userId: id });
+
+      if (calorie.length > 0) {
+        calorie.forEach(async (item) => {
+          if (item.imageUrl != null) {
+            await fs.unlink(path.join(`public/${item.imageUrl}`));
+          }
+
+          const dataCalorie = await Calorie.findOneAndDelete({ _id: item._id });
+        });
+      }
+
+      if (user != null) {
+        if (user.imageUrl != null) {
+          await fs.unlink(path.join(`public/${user.imageUrl}`));
+        }
+
+        await User.findOneAndDelete({ _id: id });
+      }
+
+      return res.json({
+        success: true,
+        msg: "success delete data user",
       });
     } catch (e) {
       return res.json({
