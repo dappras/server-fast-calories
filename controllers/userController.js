@@ -58,6 +58,7 @@ module.exports = {
         success: true,
         msg: "Anda Berhasil Login!!",
         token: user.token,
+        user: user,
       });
     } catch (error) {
       return res.json({ msg: e.message });
