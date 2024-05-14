@@ -133,7 +133,7 @@ module.exports = {
       if (calorie.length > 0) {
         calorie.forEach(async (item) => {
           if (item.imageUrl != null && item.imageUrl != "") {
-            await fs.unlink(path.join(`public/${item.imageUrl}`));
+            // await fs.unlink(path.join(`public/${item.imageUrl}`));
           }
 
           await Calorie.findOneAndDelete({ _id: item._id });
@@ -142,7 +142,7 @@ module.exports = {
 
       if (user != null) {
         if (user.imageUrl != null && user.imageUrl != "") {
-          await fs.unlink(path.join(`public/${user.imageUrl}`));
+          // await fs.unlink(path.join(`public/${user.imageUrl}`));
         }
 
         await User.findOneAndDelete({ _id: id });
@@ -196,7 +196,7 @@ module.exports = {
         ) {
           user.imageUrl = `images/${req.fileName}`;
         } else {
-          await fs.unlink(path.join(`public/${user.imageUrl}`));
+          // await fs.unlink(path.join(`public/${user.imageUrl}`));
           user.imageUrl = `images/${req.fileName}`;
         }
         if (password === undefined) {
